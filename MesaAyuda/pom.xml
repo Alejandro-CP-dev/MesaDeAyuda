@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>co.edu.sena</groupId>
+    <artifactId>mesa-ayuda</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Mesa de Ayuda CIMM</name>
+    <description>
+        Sistema de tickets de soporte - Taller Integrador ADSO
+        SENA CIMM Regional Boyaca - Ficha 3232460
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Java 11 segun los requisitos tecnicos del taller.
+        En NetBeans: clic derecho en el proyecto > Properties >
+        Sources > Source/Binary Format debe quedar en 11. -->
+        <maven.compiler.release>11</maven.compiler.release>
+
+        <servlet.version>3.1.0</servlet.version>
+        <jsp.version>2.3.3</jsp.version>
+        <jstl.version>1.2</jstl.version>
+        <mysql.version>8.0.33</mysql.version>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- ============================================================
+        API DE SERVLETS
+        REEMPLAZA a javaee-web-api-7.0.jar, que NetBeans agrega por
+        defecto. Aquel es un JAR sombrilla con el bytecode recortado
+        y produce el error "Absent Code attribute" al compilar
+        cualquier clase que herede de HttpServlet.
+
+        scope=provided: Tomcat ya trae esta libreria. Si se empaqueta
+        dentro del WAR, el despliegue falla por clases duplicadas.
+
+        Version 3.1.0 = Tomcat 8 (funciona igual en Tomcat 9).
+        NO usar jakarta.servlet: el taller exige javax.
+        ============================================================ -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- API de JSP: tambien la provee Tomcat -->
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jsp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ============================================================
+        JSTL
+        OJO: esta SI se empaqueta en el WAR (sin scope). Tomcat NO
+        incluye JSTL y javaee-web-api tampoco la trae. Si la marcas
+        como provided, las JSP fallan con
+        "The absolute uri cannot be resolved" al usar <c:forEach>.
+        ============================================================ -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+
+        <!-- ============================================================
+        DRIVER JDBC DE MYSQL
+        Este es el artefacto que ya tienes (com.mysql:mysql-connector-j),
+        que es el nombre moderno y correcto.
+        protobuf-java entra solo como dependencia transitiva suya:
+        es normal, no lo quites.
+
+        Solo lo usa TicketRepositoryJdbc; los servicios jamas lo
+        tocan porque dependen de la interfaz TicketRepository (DIP).
+        ============================================================ -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!-- ============================================================
+        JUNIT 5 (pruebas)
+        Clave para la sustentacion: permite demostrar que una
+        transicion invalida (cerrar un ticket NUEVO) lanza excepcion,
+        sin reproducirlo a mano en el navegador.
+        ============================================================ -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <!-- Nombre del WAR y del contexto:
+        http://localhost:8080/mesa-ayuda -->
+        <finalName>mesa-ayuda</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+
+            <!-- failOnMissingWebXml=false permite registrar Servlets con
+            anotaciones (@WebServlet, @WebListener) sin declararlos
+            uno por uno en el web.xml. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
