@@ -1,0 +1,21 @@
+package co.edu.sena.mesaayuda.modelo;
+
+/** Categoria de un ticket (Red, Hardware, Software, Mantenimiento...). */
+public class Categoria {
+
+    private final Long id;
+    private final String nombre;
+
+    public Categoria(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+}
