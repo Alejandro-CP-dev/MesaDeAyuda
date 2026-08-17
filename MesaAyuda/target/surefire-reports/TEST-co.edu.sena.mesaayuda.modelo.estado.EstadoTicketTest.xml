@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.076" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.07" tests="7" errors="0" skipped="0" failures="0">
   <properties>
-    <property name="netbeans.deploy" value="true"/>
     <property name="java.specification.version" value="25"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Usuario\Downloads\Temporales\mesa-ayuda\target\test-classes;C:\Users\Usuario\Downloads\Temporales\mesa-ayuda\target\classes;C:\Users\Usuario\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\Usuario\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\Usuario\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\Usuario\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Usuario\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
+    <property name="java.class.path" value="C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\test-classes;C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\classes;C:\Users\Usuario\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\Usuario\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\Usuario\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\Usuario\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Usuario\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
-    <property name="exec.appArgs" value=""/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="user.timezone" value="America/Bogota"/>
     <property name="os.name" value="Windows 11"/>
@@ -17,10 +15,9 @@
     <property name="user.country" value="ES"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25.0.4\bin"/>
-    <property name="sun.java.command" value="C:\Users\Usuario\AppData\Local\Temp\surefire15082384178444939414\surefirebooter-20260817111832088_3.jar C:\Users\Usuario\AppData\Local\Temp\surefire15082384178444939414 2026-08-17T11-18-31_944-jvmRun1 surefire-20260817111832088_1tmp surefire_0-20260817111832088_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Usuario\AppData\Local\Temp\surefire1892197107658601286\surefirebooter-20260817113202945_3.jar C:\Users\Usuario\AppData\Local\Temp\surefire1892197107658601286 2026-08-17T11-32-02_810-jvmRun1 surefire-20260817113202945_1tmp surefire_0-20260817113202945_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="exec.vmArgs" value=""/>
-    <property name="surefire.test.class.path" value="C:\Users\Usuario\Downloads\Temporales\mesa-ayuda\target\test-classes;C:\Users\Usuario\Downloads\Temporales\mesa-ayuda\target\classes;C:\Users\Usuario\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\Usuario\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\Usuario\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\Usuario\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Usuario\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\test-classes;C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\classes;C:\Users\Usuario\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\Usuario\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\Usuario\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\Usuario\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Usuario\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Usuario"/>
     <property name="user.language" value="es"/>
@@ -28,12 +25,12 @@
     <property name="java.version.date" value="2026-07-21"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-25.0.4"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\Usuario\Downloads\Temporales\mesa-ayuda"/>
+    <property name="basedir" value="C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Usuario\AppData\Local\Temp\surefire15082384178444939414\surefirebooter-20260817111832088_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Usuario\AppData\Local\Temp\surefire1892197107658601286\surefirebooter-20260817113202945_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.4+7-LTS-189"/>
@@ -49,7 +46,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\Usuario\AppData\Local\Temp\"/>
     <property name="java.version" value="25.0.4"/>
-    <property name="user.dir" value="C:\Users\Usuario\Downloads\Temporales\mesa-ayuda"/>
+    <property name="user.dir" value="C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -63,11 +60,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="asignadoSoloPuedeIniciarOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.029"/>
+  <testcase name="asignadoSoloPuedeIniciarOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.028"/>
   <testcase name="laFabricaReconstruyeElEstadoCorrectoDesdeElNombrePersistido" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.006"/>
   <testcase name="resueltoPuedeCerrarseReabrirseOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.001"/>
   <testcase name="cancelarUnTicketYaCerradoNoDeberiaSerPosible_reglaDelNegocio" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.001"/>
-  <testcase name="enProcesoSoloPuedeResolverseOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.002"/>
+  <testcase name="enProcesoSoloPuedeResolverseOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.001"/>
   <testcase name="nuevoSoloPuedeAsignarseOCancelarse" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.002"/>
   <testcase name="cerradoNoAdmiteNingunaTransicion" classname="co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest" time="0.002"/>
 </testsuite>
