@@ -21,7 +21,6 @@ consola):
 
 ```
 sql/01_MesaAyudaDb_principal.sql
-sql/02_MesaAyudaDb_complemento.sql
 ```
 
 El primero crea la base `MesaAyudaDb` y las tablas base (`Rol`, `Usuario`,
