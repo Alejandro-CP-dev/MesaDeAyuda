@@ -5,7 +5,8 @@ import co.edu.sena.mesaayuda.modelo.Categoria;
 import co.edu.sena.mesaayuda.modelo.Rol;
 import co.edu.sena.mesaayuda.modelo.Usuario;
 import co.edu.sena.mesaayuda.repositorio.CategoriaRepository;
-import co.edu.sena.mesaayuda.servicio.TicketService;
+import co.edu.sena.mesaayuda.servicio.ConsultaTicketService;
+import co.edu.sena.mesaayuda.servicio.OperacionesSolicitante;
 import co.edu.sena.mesaayuda.servicio.excepcion.AccesoNoAutorizadoException;
 import co.edu.sena.mesaayuda.servicio.excepcion.RecursoNoEncontradoException;
 
@@ -18,11 +19,13 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * RF-05: lista tickets segun el rol de quien esta autenticado.
- * RF-02: registra un ticket nuevo (solo SOLICITANTE).
+ * RF-05: lista tickets segun el rol de quien esta autenticado (usa
+ * ConsultaTicketService: leer no es privilegio de un rol). RF-02: registra un
+ * ticket nuevo (usa OperacionesSolicitante: crear SI es privilegio de un rol, y
+ * este servlet solo pide la interfaz de ese rol).
  *
- * SRP: este servlet solo orquesta HTTP <-> TicketService; ninguna regla de
- * negocio (permisos, prioridad, SLA, asignacion) vive aqui.
+ * SRP: este servlet solo orquesta HTTP <-> servicios; ninguna regla de negocio
+ * (permisos, prioridad, SLA, asignacion) vive aqui.
  */
 @WebServlet(name = "ticketsServlet", urlPatterns = {"/app/tickets"})
 public class TicketsServlet extends HttpServlet {
@@ -31,11 +34,12 @@ public class TicketsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Usuario usuario = SesionUsuario.obtener(request);
-        TicketService ticketService = (TicketService) getServletContext().getAttribute(AppContextListener.TICKET_SERVICE);
-        CategoriaRepository categoriaRepository =
-                (CategoriaRepository) getServletContext().getAttribute(AppContextListener.CATEGORIA_REPOSITORY);
+        ConsultaTicketService consultaTicketService
+                = (ConsultaTicketService) getServletContext().getAttribute(AppContextListener.CONSULTA_TICKET_SERVICE);
+        CategoriaRepository categoriaRepository
+                = (CategoriaRepository) getServletContext().getAttribute(AppContextListener.CATEGORIA_REPOSITORY);
 
-        List<TicketDTO> tickets = ticketService.listarParaUsuario(usuario);
+        List<TicketDTO> tickets = consultaTicketService.listarParaUsuario(usuario);
         List<Categoria> categorias = categoriaRepository.listarTodas();
 
         request.setAttribute("tickets", tickets);
@@ -47,7 +51,8 @@ public class TicketsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Usuario usuario = SesionUsuario.obtener(request);
-        TicketService ticketService = (TicketService) getServletContext().getAttribute(AppContextListener.TICKET_SERVICE);
+        OperacionesSolicitante operacionesSolicitante
+                = (OperacionesSolicitante) getServletContext().getAttribute(AppContextListener.OPERACIONES_SOLICITANTE);
 
         if (usuario.getRol() != Rol.SOLICITANTE) {
             request.setAttribute("error", "Solo un solicitante puede registrar tickets");
@@ -60,7 +65,7 @@ public class TicketsServlet extends HttpServlet {
         Long categoriaId = Long.valueOf(request.getParameter("categoriaId"));
 
         try {
-            ticketService.crearTicket(titulo, descripcion, categoriaId, usuario);
+            operacionesSolicitante.crearTicket(titulo, descripcion, categoriaId, usuario);
             response.sendRedirect(request.getContextPath() + "/app/tickets");
         } catch (RecursoNoEncontradoException | AccesoNoAutorizadoException e) {
             request.setAttribute("error", e.getMessage());

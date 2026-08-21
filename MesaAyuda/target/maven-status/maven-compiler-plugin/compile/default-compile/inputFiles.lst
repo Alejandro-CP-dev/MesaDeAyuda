@@ -34,9 +34,11 @@ C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\s
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\UsuarioRepositoryJdbc.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\HashUtil.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\mapper\TicketMapper.java
+C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\OperacionesSolicitante.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\dto\TicketDTO.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\CategoriaRepositoryJdbc.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\PrioridadRepositoryJdbc.java
+C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\ConsultaTicketService.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\NotificacionRepository.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\dto\ComentarioDTO.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\notificacion\NotificadorEnAplicacion.java
@@ -45,6 +47,7 @@ C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\s
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\excepcion\RecursoNoEncontradoException.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\PrioridadRepository.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\Ticket.java
+C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\OperacionesAgente.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\notificacion\NotificadorCorreo.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\web\LogoutServlet.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\NotificacionRepositoryJdbc.java
@@ -52,11 +55,11 @@ C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\s
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\estado\EstadoTicketFactory.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\Notificacion.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\web\AppContextListener.java
+C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\OperacionesAdministrador.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\Usuario.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\Prioridad.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\repositorio\ComentarioRepository.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\AutenticacionServiceImpl.java
-C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\TicketService.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\web\SesionUsuario.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\servicio\asignacion\EstrategiaAsignacion.java
 C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\src\main\java\co\edu\sena\mesaayuda\modelo\estado\TransicionInvalidaException.java

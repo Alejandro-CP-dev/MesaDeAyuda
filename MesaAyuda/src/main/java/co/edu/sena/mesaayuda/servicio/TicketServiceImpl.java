@@ -27,13 +27,21 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Implementacion de TicketService. Coordina el patron State (Ticket delega
- * las transiciones en su EstadoTicket) con las estrategias de SLA,
- * asignacion y notificacion, y deja constancia de cada cambio en
- * TicketHistorial. No hay ni un if/else de estados aqui: eso vive en las
- * clases de modelo.estado.
+ * Implementacion unica que resuelve las tres interfaces segregadas por rol
+ * (ISP): {@link OperacionesSolicitante}, {@link OperacionesAgente} y
+ * {@link OperacionesAdministrador}, ademas de la lectura comun
+ * {@link ConsultaTicketService}. Que la implementacion sea una sola clase
+ * es una decision valida (LSP: cada interfaz sigue siendo sustituible por
+ * esta clase sin sorpresas) — lo que importa para ISP es que cada
+ * CONSUMIDOR (cada Servlet) dependa solo de la interfaz de su rol, nunca
+ * de las tres juntas ni de esta clase concreta.
+ *
+ * Coordina el patron State (Ticket delega las transiciones en su
+ * EstadoTicket) con las estrategias de SLA, asignacion y notificacion, y
+ * deja constancia de cada cambio en TicketHistorial. No hay ni un if/else
+ * de estados aqui: eso vive en las clases de modelo.estado.
  */
-public class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements OperacionesSolicitante, OperacionesAgente, OperacionesAdministrador {
 
     private final TicketRepository ticketRepository;
     private final CategoriaRepository categoriaRepository;
@@ -111,6 +119,12 @@ public class TicketServiceImpl implements TicketService {
     public void cerrar(Long ticketId, Usuario solicitante) {
         Ticket ticket = obtenerTicketPropioDeSolicitante(ticketId, solicitante);
         transicionar(ticket, solicitante.getId(), Ticket::cerrar);
+        // RF-08 exige notificar al solicitante en CADA cambio de estado,
+        // incluido este que el mismo solicitante provoco: deja constancia
+        // formal del cierre (util como comprobante), ademas de avisar al
+        // agente de que el caso quedo cerrado.
+        notificarSolicitante(ticket, "Ticket #" + ticket.getId() + " cerrado",
+                "Confirmaste y cerraste tu ticket. Gracias por usar la Mesa de Ayuda.");
         notificarAgenteSiExiste(ticket, "Ticket #" + ticket.getId() + " cerrado",
                 solicitante.getNombre() + " confirmo y cerro el ticket.");
     }
@@ -119,6 +133,10 @@ public class TicketServiceImpl implements TicketService {
     public void reabrir(Long ticketId, Usuario solicitante) {
         Ticket ticket = obtenerTicketPropioDeSolicitante(ticketId, solicitante);
         transicionar(ticket, solicitante.getId(), Ticket::reabrir);
+        // Mismo motivo que en cerrar(): RF-08 pide notificar al solicitante
+        // en cada transicion, sin excepcion para las que el mismo origina.
+        notificarSolicitante(ticket, "Ticket #" + ticket.getId() + " reabierto",
+                "Reabriste tu ticket. El agente retomara la atencion.");
         notificarAgenteSiExiste(ticket, "Ticket #" + ticket.getId() + " reabierto",
                 solicitante.getNombre() + " reabrio el ticket: el problema persiste.");
     }

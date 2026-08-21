@@ -18,9 +18,12 @@ import co.edu.sena.mesaayuda.servicio.AutenticacionService;
 import co.edu.sena.mesaayuda.servicio.AutenticacionServiceImpl;
 import co.edu.sena.mesaayuda.servicio.ComentarioService;
 import co.edu.sena.mesaayuda.servicio.ComentarioServiceImpl;
+import co.edu.sena.mesaayuda.servicio.ConsultaTicketService;
+import co.edu.sena.mesaayuda.servicio.OperacionesAdministrador;
+import co.edu.sena.mesaayuda.servicio.OperacionesAgente;
+import co.edu.sena.mesaayuda.servicio.OperacionesSolicitante;
 import co.edu.sena.mesaayuda.servicio.PrioridadService;
 import co.edu.sena.mesaayuda.servicio.PrioridadServiceImpl;
-import co.edu.sena.mesaayuda.servicio.TicketService;
 import co.edu.sena.mesaayuda.servicio.TicketServiceImpl;
 import co.edu.sena.mesaayuda.servicio.asignacion.AsignacionPorMenorCarga;
 import co.edu.sena.mesaayuda.servicio.asignacion.EstrategiaAsignacion;
@@ -38,19 +41,28 @@ import javax.servlet.annotation.WebListener;
 import java.util.List;
 
 /**
- * Punto de composicion (composition root) de la aplicacion, igual rol que
- * en el proyecto de referencia: aqui, y SOLO aqui, se crean las
- * implementaciones concretas y se inyectan por constructor. El resto del
- * codigo (servicios, servlets) trabaja contra interfaces (DIP).
+ * Punto de composicion (composition root) de la aplicacion, igual rol que en el
+ * proyecto de referencia: aqui, y SOLO aqui, se crean las implementaciones
+ * concretas y se inyectan por constructor. El resto del codigo (servicios,
+ * servlets) trabaja contra interfaces (DIP).
  *
  * Cambiar la estrategia de asignacion activa (por menor carga vs. turno
- * rotativo) o los canales de notificacion activos se hace UNICAMENTE en
- * este archivo (OCP: no hay que tocar TicketService).
+ * rotativo) o los canales de notificacion activos se hace UNICAMENTE en este
+ * archivo (OCP: no hay que tocar TicketService).
  */
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
-    public static final String TICKET_SERVICE = "ticketService";
+    // ISP: cuatro claves para la MISMA instancia de TicketServiceImpl, cada
+    // una publicada bajo el tipo de interfaz que le corresponde a su rol.
+    // Un servlet que solo necesita las operaciones de agente pide
+    // OPERACIONES_AGENTE y el compilador no lo deja llamar, por ejemplo,
+    // cancelar() (esa es de administrador): el objeto real puede hacerlo
+    // todo, pero la interfaz que cada consumidor ve es la minima necesaria.
+    public static final String CONSULTA_TICKET_SERVICE = "consultaTicketService";
+    public static final String OPERACIONES_SOLICITANTE = "operacionesSolicitante";
+    public static final String OPERACIONES_AGENTE = "operacionesAgente";
+    public static final String OPERACIONES_ADMINISTRADOR = "operacionesAdministrador";
     public static final String COMENTARIO_SERVICE = "comentarioService";
     public static final String AUTENTICACION_SERVICE = "autenticacionService";
     public static final String CATEGORIA_REPOSITORY = "categoriaRepository";
@@ -85,12 +97,17 @@ public class AppContextListener implements ServletContextListener {
         PrioridadService prioridadService = new PrioridadServiceImpl(prioridadRepository);
         AutenticacionService autenticacionService = new AutenticacionServiceImpl(usuarioRepository);
         ComentarioService comentarioService = new ComentarioServiceImpl(comentarioRepository, ticketRepository);
-        TicketService ticketService = new TicketServiceImpl(
+        TicketServiceImpl ticketService = new TicketServiceImpl(
                 ticketRepository, categoriaRepository, usuarioRepository, comentarioRepository,
                 historialRepository, prioridadService, estrategiaSla, estrategiaAsignacion, publicadorNotificaciones);
 
-        // 5. Publicar en el contexto para que los servlets los usen.
-        contexto.setAttribute(TICKET_SERVICE, ticketService);
+        // 5. Publicar en el contexto para que los servlets los usen. La MISMA
+        // instancia se publica 4 veces, cada vez "disfrazada" del tipo de
+        // interfaz correspondiente (ISP en accion en el punto de inyeccion).
+        contexto.setAttribute(CONSULTA_TICKET_SERVICE, (ConsultaTicketService) ticketService);
+        contexto.setAttribute(OPERACIONES_SOLICITANTE, (OperacionesSolicitante) ticketService);
+        contexto.setAttribute(OPERACIONES_AGENTE, (OperacionesAgente) ticketService);
+        contexto.setAttribute(OPERACIONES_ADMINISTRADOR, (OperacionesAdministrador) ticketService);
         contexto.setAttribute(COMENTARIO_SERVICE, comentarioService);
         contexto.setAttribute(AUTENTICACION_SERVICE, autenticacionService);
         contexto.setAttribute(CATEGORIA_REPOSITORY, categoriaRepository);
@@ -99,6 +116,33 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent evento) {
-        // Sin pool de conexiones ni otros recursos que liberar explicitamente.
+        // Apaga a mano el hilo interno de limpieza del driver de MySQL.
+        // Sin esto, ese hilo sigue vivo despues de parar la app, con una
+        // referencia al ClassLoader de este WAR, y Tomcat lo reporta como
+        // fuga de memoria en cada redeploy ("esta instancia de aplicacion
+        // web ya ha sido parada"). Es el arreglo oficial de MySQL Connector/J.
+        try {
+            com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.checkedShutdown();
+        } catch (Exception e) {
+            // No relanzamos: si falla el apagado del hilo de limpieza no
+            // debe impedir que el resto del contexto termine de destruirse.
+            java.util.logging.Logger.getLogger(AppContextListener.class.getName())
+                    .warning("No se pudo apagar AbandonedConnectionCleanupThread: " + e.getMessage());
+        }
+
+        // Tambien anulamos el driver registrado para este ClassLoader, por
+        // la misma razon: evita que quede referenciado tras el redeploy.
+        java.util.Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            java.sql.Driver driver = drivers.nextElement();
+            if (driver.getClass().getClassLoader() == this.getClass().getClassLoader()) {
+                try {
+                    java.sql.DriverManager.deregisterDriver(driver);
+                } catch (java.sql.SQLException e) {
+                    java.util.logging.Logger.getLogger(AppContextListener.class.getName())
+                            .warning("No se pudo desregistrar el driver JDBC: " + e.getMessage());
+                }
+            }
+        }
     }
 }

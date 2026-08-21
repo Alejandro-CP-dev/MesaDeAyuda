@@ -10,6 +10,7 @@ co\edu\sena\mesaayuda\modelo\estado\Cerrado.class
 co\edu\sena\mesaayuda\servicio\asignacion\AsignacionPorMenorCarga.class
 co\edu\sena\mesaayuda\servicio\notificacion\NotificadorCorreo.class
 co\edu\sena\mesaayuda\web\LoginServlet.class
+co\edu\sena\mesaayuda\servicio\ConsultaTicketService.class
 co\edu\sena\mesaayuda\servicio\sla\EstrategiaSla.class
 co\edu\sena\mesaayuda\repositorio\NotificacionRepository.class
 co\edu\sena\mesaayuda\web\LogoutServlet.class
@@ -20,6 +21,7 @@ co\edu\sena\mesaayuda\web\AppContextListener.class
 co\edu\sena\mesaayuda\repositorio\UsuarioRepositoryJdbc.class
 co\edu\sena\mesaayuda\modelo\estado\EnProceso.class
 co\edu\sena\mesaayuda\repositorio\ComentarioRepository.class
+co\edu\sena\mesaayuda\servicio\OperacionesAdministrador.class
 co\edu\sena\mesaayuda\servicio\PrioridadService.class
 co\edu\sena\mesaayuda\servicio\TicketServiceImpl.class
 co\edu\sena\mesaayuda\modelo\Prioridad.class
@@ -46,7 +48,7 @@ co\edu\sena\mesaayuda\repositorio\ConexionBD.class
 co\edu\sena\mesaayuda\web\SesionUsuario.class
 co\edu\sena\mesaayuda\modelo\Rol.class
 co\edu\sena\mesaayuda\servicio\notificacion\NotificadorSms.class
-co\edu\sena\mesaayuda\servicio\TicketService.class
+co\edu\sena\mesaayuda\servicio\OperacionesAgente.class
 co\edu\sena\mesaayuda\servicio\sla\SlaPorHorasPrioridad.class
 co\edu\sena\mesaayuda\modelo\Notificacion.class
 co\edu\sena\mesaayuda\repositorio\PrioridadRepository.class
@@ -56,6 +58,7 @@ co\edu\sena\mesaayuda\modelo\estado\TransicionInvalidaException.class
 co\edu\sena\mesaayuda\servicio\ComentarioServiceImpl.class
 co\edu\sena\mesaayuda\servicio\TicketServiceImpl$Transicion.class
 co\edu\sena\mesaayuda\modelo\Ticket.class
+co\edu\sena\mesaayuda\servicio\OperacionesSolicitante.class
 co\edu\sena\mesaayuda\modelo\estado\Asignado.class
 co\edu\sena\mesaayuda\mapper\TicketMapper.class
 co\edu\sena\mesaayuda\modelo\CanalNotificacion.class
