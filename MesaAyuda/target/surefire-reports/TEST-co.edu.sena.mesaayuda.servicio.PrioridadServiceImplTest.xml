@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.036" tests="3" errors="0" skipped="0" failures="0">
+=======
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.02" tests="3" errors="0" skipped="0" failures="0">
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b
   <properties>
     <property name="netbeans.deploy" value="true"/>
     <property name="java.specification.version" value="25"/>
@@ -17,7 +21,11 @@
     <property name="user.country" value="ES"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25.0.4\bin"/>
+<<<<<<< HEAD
     <property name="sun.java.command" value="C:\Users\Usuario\AppData\Local\Temp\surefire6536192656721801842\surefirebooter-20260826133022245_3.jar C:\Users\Usuario\AppData\Local\Temp\surefire6536192656721801842 2026-08-26T13-30-22_098-jvmRun1 surefire-20260826133022245_1tmp surefire_0-20260826133022245_2tmp"/>
+=======
+    <property name="sun.java.command" value="C:\Users\Usuario\AppData\Local\Temp\surefire2113393253790360771\surefirebooter-20260825200642376_3.jar C:\Users\Usuario\AppData\Local\Temp\surefire2113393253790360771 2026-08-25T20-06-42_183-jvmRun1 surefire-20260825200642376_1tmp surefire_0-20260825200642376_2tmp"/>
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b
     <property name="jdk.debug" value="release"/>
     <property name="exec.vmArgs" value=""/>
     <property name="surefire.test.class.path" value="C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\test-classes;C:\Users\Usuario\Documents\Programacion\Github\MesaAyuda\MesaDeAyuda\mesaAyuda\target\classes;C:\Users\Usuario\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\Usuario\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\Usuario\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\Usuario\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Usuario\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Usuario\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
@@ -33,7 +41,11 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
+<<<<<<< HEAD
     <property name="surefire.real.class.path" value="C:\Users\Usuario\AppData\Local\Temp\surefire6536192656721801842\surefirebooter-20260826133022245_3.jar"/>
+=======
+    <property name="surefire.real.class.path" value="C:\Users\Usuario\AppData\Local\Temp\surefire2113393253790360771\surefirebooter-20260825200642376_3.jar"/>
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.4+7-LTS-189"/>
@@ -63,7 +75,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
+<<<<<<< HEAD
   <testcase name="unTicketConPalabraErrorEsAlto" classname="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.01"/>
   <testcase name="unTicketSinPalabrasClaveEsMedioPorDefecto" classname="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.013"/>
+=======
+  <testcase name="unTicketConPalabraErrorEsAlto" classname="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.006"/>
+  <testcase name="unTicketSinPalabrasClaveEsMedioPorDefecto" classname="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.001"/>
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b
   <testcase name="unTicketConPalabraCaidoEsCritico" classname="co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest" time="0.001"/>
 </testsuite>

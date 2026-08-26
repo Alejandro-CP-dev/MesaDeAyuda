@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest
+=======
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in co.edu.sena.mesaayuda.servicio.PrioridadServiceImplTest
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b

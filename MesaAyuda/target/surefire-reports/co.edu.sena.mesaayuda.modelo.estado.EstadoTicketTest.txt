@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.157 s -- in co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest
+=======
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.084 s -- in co.edu.sena.mesaayuda.modelo.estado.EstadoTicketTest
+>>>>>>> c6a58114c71df8811db9ea4c62f891fe32ba923b
