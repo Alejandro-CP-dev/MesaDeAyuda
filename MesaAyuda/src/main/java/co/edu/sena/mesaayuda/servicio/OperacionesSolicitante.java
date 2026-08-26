@@ -15,8 +15,14 @@ public interface OperacionesSolicitante extends ConsultaTicketService {
     /** RF-02: registrar un ticket nuevo. */
     TicketDTO crearTicket(String titulo, String descripcion, Long categoriaId, Usuario solicitante);
 
-    /** RF-06: el solicitante confirma la solucion. RESUELTO -> CERRADO. */
-    void cerrar(Long ticketId, Usuario solicitante);
+    /**
+     * RF-06: el solicitante confirma la solucion escribiendo el codigo OTP
+     * que se le envio al resolverse el ticket (reto adicional).
+     * RESUELTO/CERRADO -> CERRADO.
+     *
+     * @throws co.edu.sena.mesaayuda.modelo.CodigoCierreInvalidoException si el codigo no coincide.
+     */
+    void cerrar(Long ticketId, String codigoCierre, Usuario solicitante);
 
     /** RF-06: el solicitante indica que el problema persiste. RESUELTO -> EN_PROCESO. */
     void reabrir(Long ticketId, Usuario solicitante);

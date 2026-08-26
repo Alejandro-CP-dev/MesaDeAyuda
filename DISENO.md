@@ -48,7 +48,7 @@ if/else ni switch de estados en el proyecto.
 
 Para activar una implementacion distinta (por ejemplo `AsignacionPorTurnoRotativo`
 en vez de `AsignacionPorMenorCarga`) se cambia UNA linea en
-`AppContextListener`. `TicketService` no se toca.
+`AppContextListener`. Ninguna interfaz de servicio se toca.
 
 ## 4. Tabla SOLID → clases
 
@@ -56,8 +56,8 @@ en vez de `AsignacionPorMenorCarga`) se cambia UNA linea en
 |---|---|---|
 | **S**RP | `web.*Servlet` vs `servicio.*ServiceImpl` vs `repositorio.*RepositoryJdbc` | Cada capa tiene una sola razon para cambiar: el Servlet si cambia el flujo HTTP, el Service si cambia una regla de negocio, el Repository si cambia la forma de persistir. |
 | **O**CP | `modelo.estado.*`, `servicio.sla.*`, `servicio.asignacion.*`, `servicio.notificacion.*` | Agregar un estado, una politica de SLA, una estrategia de asignacion o un canal de notificacion es CREAR una clase nueva que implemente la interfaz correspondiente. Ninguna clase existente se modifica. |
-| **L**SP | Todas las implementaciones de `EstadoTicket`, `EstrategiaAsignacion`, `EstrategiaSla`, `Notificador`, `*Repository` | Cualquier implementacion puede sustituir a su interfaz sin romper quien la usa (por ejemplo, `TicketRepositoryJdbc` podria cambiarse por un `TicketRepositoryEnMemoria` para pruebas, y `TicketService` seguiria funcionando igual). |
-| **I**SP | `TicketRepository`, `ComentarioRepository`, `UsuarioRepository`, etc. (una interfaz por entidad) y `TicketService`/`ComentarioService`/`AutenticacionService` (una interfaz por responsabilidad) | En vez de un `Repository` o `Service` gigante con todos los metodos del sistema, cada interfaz expone solo lo que su consumidor necesita. |
+| **L**SP | Todas las implementaciones de `EstadoTicket`, `EstrategiaAsignacion`, `EstrategiaSla`, `Notificador`, `*Repository` | Cualquier implementacion puede sustituir a su interfaz sin romper quien la usa (por ejemplo, `TicketRepositoryJdbc` podria cambiarse por un `TicketRepositoryEnMemoria` para pruebas, y los Servlets seguirian funcionando igual). |
+| **I**SP | `TicketRepository`, `ComentarioRepository`, `UsuarioRepository`, etc. (una interfaz por entidad); y `ConsultaTicketService` + `OperacionesSolicitante` + `OperacionesAgente` + `OperacionesAdministrador` (una interfaz por ROL sobre Ticket) | La lectura (`listarParaUsuario`, `obtenerDetalle`) es comun a los tres roles y vive en `ConsultaTicketService`. La escritura NO: `OperacionesSolicitante` solo tiene `crearTicket/cerrar/reabrir`, `OperacionesAgente` solo `iniciarAtencion/resolver`, `OperacionesAdministrador` solo `cancelar/reasignar`. `TicketServiceImpl` es la unica clase que las implementa las tres (LSP: sigue siendo sustituible por cualquiera de ellas), pero cada Servlet en `AppContextListener` recibe SOLO la interfaz de su rol — un Servlet de agente no puede, ni por error, llamar `cancelar()`. |
 | **D**IP | `servicio.TicketServiceImpl` (y los demas Service) | Reciben `TicketRepository`, `UsuarioRepository`, `EstrategiaSla`, etc. por **constructor** — nunca hacen `new TicketRepositoryJdbc()` ellos mismos. Solo `AppContextListener` conoce las clases concretas. |
 
 ## 5. Requisitos funcionales y donde viven
@@ -71,7 +71,7 @@ en vez de `AsignacionPorMenorCarga`) se cambia UNA linea en
 | RF-05 Listar segun rol | `TicketServiceImpl.listarParaUsuario` |
 | RF-06 Cambiar estado | `Ticket` + `modelo.estado.*` (patron State) |
 | RF-07 Comentarios | `ComentarioServiceImpl` |
-| RF-08 Notificaciones | `PublicadorNotificaciones` + `Notificador` |
+| RF-08 Notificaciones | `PublicadorNotificaciones` + `Notificador`. Se notifica al solicitante en TODA transicion, incluidas `cerrar`/`reabrir` que el mismo solicitante origina (queda como constancia), ademas de avisar al agente en esos dos casos. |
 | RF-09 SLA | `EstrategiaSla`, columna `Ticket.FechaLimiteSla` |
 | RF-10 Reasignar (admin) | `TicketServiceImpl.reasignar` |
 

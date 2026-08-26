@@ -63,6 +63,7 @@ CREATE TABLE Ticket (
     PrioridadId    BIGINT NOT NULL,
     SolicitanteId  BIGINT NOT NULL,
     AgenteId       BIGINT NULL,
+    CodigoCierre   VARCHAR(6) NULL COMMENT 'OTP que el solicitante debe escribir para cerrar (reto adicional)',
     CONSTRAINT FK_Ticket_Categoria
         FOREIGN KEY (CategoriaId) REFERENCES Categoria(Id)
         ON UPDATE CASCADE ON DELETE RESTRICT,

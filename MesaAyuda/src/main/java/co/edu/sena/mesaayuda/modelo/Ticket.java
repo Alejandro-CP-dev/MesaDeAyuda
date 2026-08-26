@@ -33,13 +33,14 @@ public class Ticket {
     private final Prioridad prioridad;
     private final Long solicitanteId;
     private Long agenteId;
+    private String codigoCierre;
     private final List<Comentario> comentarios = new ArrayList<>();
 
     /** Constructor para un ticket nuevo (todavia no persistido). */
     public Ticket(String titulo, String descripcion, Categoria categoria,
                    Prioridad prioridad, Long solicitanteId) {
         this(null, titulo, descripcion, Nuevo.getInstancia(), LocalDateTime.now(),
-                null, null, null, null, categoria, prioridad, solicitanteId, null);
+                null, null, null, null, categoria, prioridad, solicitanteId, null, null);
     }
 
     /** Constructor completo, usado por el mapper al reconstruir desde la BD. */
@@ -47,7 +48,7 @@ public class Ticket {
                    LocalDateTime fechaCreacion, LocalDateTime fechaAsignacion,
                    LocalDateTime fechaResolucion, LocalDateTime fechaCierre,
                    LocalDateTime fechaLimiteSla, Categoria categoria, Prioridad prioridad,
-                   Long solicitanteId, Long agenteId) {
+                   Long solicitanteId, Long agenteId, String codigoCierre) {
         this.id = id;
         this.titulo = Objects.requireNonNull(titulo, "El titulo es obligatorio");
         this.descripcion = Objects.requireNonNull(descripcion, "La descripcion es obligatoria");
@@ -61,6 +62,7 @@ public class Ticket {
         this.prioridad = Objects.requireNonNull(prioridad, "La prioridad es obligatoria");
         this.solicitanteId = Objects.requireNonNull(solicitanteId, "El solicitante es obligatorio");
         this.agenteId = agenteId;
+        this.codigoCierre = codigoCierre;
     }
 
     // ---- Transiciones del ciclo de vida (RF-06): delegan al patron State ----
@@ -83,16 +85,38 @@ public class Ticket {
         this.fechaResolucion = LocalDateTime.now();
     }
 
-    /** El solicitante confirma y cierra. RESUELTO -> CERRADO. */
-    public void cerrar() {
+    /**
+     * El solicitante confirma y cierra, escribiendo el codigo OTP que se le
+     * envio al resolver (reto adicional). RESUELTO/CERRADO -> CERRADO.
+     *
+     * @param codigoIngresado el codigo que el solicitante escribio en el formulario.
+     * @throws co.edu.sena.mesaayuda.servicio.excepcion.CodigoCierreInvalidoException
+     *         si no coincide con el generado al resolver.
+     */
+    public void cerrar(String codigoIngresado) {
+        if (codigoCierre == null || !codigoCierre.equals(codigoIngresado)) {
+            throw new CodigoCierreInvalidoException("El codigo de confirmacion no es correcto");
+        }
         this.estado = estado.cerrar();
         this.fechaCierre = LocalDateTime.now();
+        // Un codigo usado no sirve para cerrar dos veces; si el ticket se
+        // reabre y se vuelve a resolver, resolver() genera uno nuevo.
+        this.codigoCierre = null;
     }
 
-    /** El solicitante reabre porque el problema persiste. RESUELTO -> EN_PROCESO. */
+    /** El solicitante reabre porque el problema persiste. RESUELTO o CERRADO -> EN_PROCESO. */
     public void reabrir() {
         this.estado = estado.reabrir();
         this.fechaResolucion = null;
+        // Si se reabre desde CERRADO, esa fecha de cierre ya no aplica:
+        // el ticket vuelve a estar activo. Si se reabre desde RESUELTO,
+        // fechaCierre ya era null, asi que esto no cambia nada en ese caso.
+        this.fechaCierre = null;
+        // El codigo OTP pendiente (si lo habia) ya no aplica: cuando el
+        // agente vuelva a resolver, resolver() no genera uno nuevo por si
+        // solo -- eso lo hace TicketServiceImpl.resolver() -- pero limpiar
+        // aqui evita que quede un codigo viejo dando vueltas sin uso.
+        this.codigoCierre = null;
     }
 
     /** El administrador cancela. Cualquier estado no cerrado -> CANCELADO. */
@@ -111,6 +135,16 @@ public class Ticket {
 
     public void definirFechaLimiteSla(LocalDateTime fechaLimiteSla) {
         this.fechaLimiteSla = fechaLimiteSla;
+    }
+
+    /**
+     * Establece el codigo OTP que el solicitante debera escribir para
+     * cerrar el ticket. Lo llama TicketServiceImpl justo despues de que el
+     * agente resuelve (generar el codigo en si es un detalle de "como", no
+     * del ciclo de vida, por eso no vive dentro de resolver()).
+     */
+    public void definirCodigoCierre(String codigoCierre) {
+        this.codigoCierre = codigoCierre;
     }
 
     // ---- Getters ----
@@ -165,6 +199,10 @@ public class Ticket {
 
     public Long getAgenteId() {
         return agenteId;
+    }
+
+    public String getCodigoCierre() {
+        return codigoCierre;
     }
 
     public List<Comentario> getComentarios() {

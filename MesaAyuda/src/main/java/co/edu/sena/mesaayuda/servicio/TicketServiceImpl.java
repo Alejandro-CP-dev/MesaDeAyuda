@@ -110,15 +110,25 @@ public class TicketServiceImpl implements OperacionesSolicitante, OperacionesAge
     @Override
     public void resolver(Long ticketId, Usuario agente) {
         Ticket ticket = obtenerTicketPropioDeAgente(ticketId, agente);
+        // Reto adicional: OTP para confirmar el cierre. El codigo se genera
+        // ANTES de transicionar para que quede en el mismo UPDATE que la
+        // transicion de estado (transicionar() persiste todo el objeto Ticket
+        // de una sola vez).
+        String codigoCierre = OtpUtil.generarCodigo();
+        ticket.definirCodigoCierre(codigoCierre);
         transicionar(ticket, agente.getId(), Ticket::resolver);
         notificarSolicitante(ticket, "Ticket #" + ticket.getId() + " resuelto",
-                "Tu ticket fue marcado como resuelto. Si el problema persiste, puedes reabrirlo.");
+                "Tu ticket fue marcado como resuelto. Para cerrarlo, escribe este codigo: "
+                        + codigoCierre + ". Si el problema persiste, puedes reabrirlo en su lugar.");
     }
 
     @Override
-    public void cerrar(Long ticketId, Usuario solicitante) {
+    public void cerrar(Long ticketId, String codigoCierre, Usuario solicitante) {
         Ticket ticket = obtenerTicketPropioDeSolicitante(ticketId, solicitante);
-        transicionar(ticket, solicitante.getId(), Ticket::cerrar);
+        // Ticket.cerrar(String) valida el codigo y lanza
+        // CodigoCierreInvalidoException si no coincide; si eso pasa, no se
+        // llega a persistir nada (transicionar() no se ejecuta).
+        transicionar(ticket, solicitante.getId(), t -> t.cerrar(codigoCierre));
         // RF-08 exige notificar al solicitante en CADA cambio de estado,
         // incluido este que el mismo solicitante provoco: deja constancia
         // formal del cierre (util como comprobante), ademas de avisar al

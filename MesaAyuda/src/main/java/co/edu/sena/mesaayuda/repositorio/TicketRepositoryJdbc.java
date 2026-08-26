@@ -27,6 +27,7 @@ public class TicketRepositoryJdbc implements TicketRepository {
     private static final String SELECT_BASE =
             "SELECT t.Id, t.Titulo, t.Descripcion, t.Estado, t.FechaCreacion, t.FechaAsignacion, " +
             "       t.FechaResolucion, t.FechaCierre, t.FechaLimiteSla, t.SolicitanteId, t.AgenteId, " +
+            "       t.CodigoCierre, " +
             "       c.Id AS CategoriaId, c.Nombre AS CategoriaNombre, " +
             "       p.Id AS PrioridadId, p.Nombre AS PrioridadNombre, p.HorasSla " +
             "FROM Ticket t " +
@@ -67,7 +68,7 @@ public class TicketRepositoryJdbc implements TicketRepository {
     @Override
     public void actualizar(Ticket ticket) {
         String sql = "UPDATE Ticket SET Estado = ?, FechaAsignacion = ?, FechaResolucion = ?, " +
-                "FechaCierre = ?, FechaLimiteSla = ?, AgenteId = ? WHERE Id = ?";
+                "FechaCierre = ?, FechaLimiteSla = ?, AgenteId = ?, CodigoCierre = ? WHERE Id = ?";
         try (Connection conexion = ConexionBD.obtener();
              PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setString(1, ticket.getEstado().nombre());
@@ -80,7 +81,8 @@ public class TicketRepositoryJdbc implements TicketRepository {
             } else {
                 sentencia.setNull(6, java.sql.Types.BIGINT);
             }
-            sentencia.setLong(7, ticket.getId());
+            sentencia.setString(7, ticket.getCodigoCierre());
+            sentencia.setLong(8, ticket.getId());
             sentencia.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error actualizando el ticket " + ticket.getId(), e);
@@ -158,7 +160,8 @@ public class TicketRepositoryJdbc implements TicketRepository {
                 categoria,
                 prioridad,
                 resultado.getLong("SolicitanteId"),
-                resultado.getObject("AgenteId") != null ? resultado.getLong("AgenteId") : null);
+                resultado.getObject("AgenteId") != null ? resultado.getLong("AgenteId") : null,
+                resultado.getString("CodigoCierre"));
     }
 
     private Timestamp aTimestamp(LocalDateTime fecha) {

@@ -3,6 +3,7 @@ package co.edu.sena.mesaayuda.web;
 import co.edu.sena.mesaayuda.dto.TicketDTO;
 import co.edu.sena.mesaayuda.dto.UsuarioDTO;
 import co.edu.sena.mesaayuda.mapper.UsuarioMapper;
+import co.edu.sena.mesaayuda.modelo.CodigoCierreInvalidoException;
 import co.edu.sena.mesaayuda.modelo.Rol;
 import co.edu.sena.mesaayuda.modelo.Usuario;
 import co.edu.sena.mesaayuda.modelo.estado.TransicionInvalidaException;
@@ -92,7 +93,8 @@ public class TicketDetalleServlet extends HttpServlet {
                 // ---- Acciones de SOLICITANTE: solo pueden pasar por aqui
                 // metodos que existen en OperacionesSolicitante. ----
                 case "cerrar":
-                    operacionesSolicitante.cerrar(ticketId, usuario);
+                    String codigoCierre = request.getParameter("codigoCierre");
+                    operacionesSolicitante.cerrar(ticketId, codigoCierre, usuario);
                     break;
                 case "reabrir":
                     operacionesSolicitante.reabrir(ticketId, usuario);
@@ -116,7 +118,8 @@ public class TicketDetalleServlet extends HttpServlet {
                     throw new IllegalArgumentException("Accion no reconocida: " + accion);
             }
             response.sendRedirect(request.getContextPath() + "/app/ticket?id=" + ticketId);
-        } catch (TransicionInvalidaException | AccesoNoAutorizadoException | IllegalArgumentException e) {
+        } catch (TransicionInvalidaException | CodigoCierreInvalidoException
+                | AccesoNoAutorizadoException | IllegalArgumentException e) {
             request.setAttribute("error", e.getMessage());
             doGet(request, response);
         } catch (RecursoNoEncontradoException e) {

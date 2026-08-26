@@ -19,11 +19,15 @@ import co.edu.sena.mesaayuda.servicio.AutenticacionServiceImpl;
 import co.edu.sena.mesaayuda.servicio.ComentarioService;
 import co.edu.sena.mesaayuda.servicio.ComentarioServiceImpl;
 import co.edu.sena.mesaayuda.servicio.ConsultaTicketService;
+import co.edu.sena.mesaayuda.servicio.NotificacionService;
+import co.edu.sena.mesaayuda.servicio.NotificacionServiceImpl;
 import co.edu.sena.mesaayuda.servicio.OperacionesAdministrador;
 import co.edu.sena.mesaayuda.servicio.OperacionesAgente;
 import co.edu.sena.mesaayuda.servicio.OperacionesSolicitante;
 import co.edu.sena.mesaayuda.servicio.PrioridadService;
 import co.edu.sena.mesaayuda.servicio.PrioridadServiceImpl;
+import co.edu.sena.mesaayuda.servicio.ReporteService;
+import co.edu.sena.mesaayuda.servicio.ReporteServiceImpl;
 import co.edu.sena.mesaayuda.servicio.TicketServiceImpl;
 import co.edu.sena.mesaayuda.servicio.asignacion.AsignacionPorMenorCarga;
 import co.edu.sena.mesaayuda.servicio.asignacion.EstrategiaAsignacion;
@@ -64,6 +68,8 @@ public class AppContextListener implements ServletContextListener {
     public static final String OPERACIONES_AGENTE = "operacionesAgente";
     public static final String OPERACIONES_ADMINISTRADOR = "operacionesAdministrador";
     public static final String COMENTARIO_SERVICE = "comentarioService";
+    public static final String REPORTE_SERVICE = "reporteService";
+    public static final String NOTIFICACION_SERVICE = "notificacionService";
     public static final String AUTENTICACION_SERVICE = "autenticacionService";
     public static final String CATEGORIA_REPOSITORY = "categoriaRepository";
     public static final String USUARIO_REPOSITORY = "usuarioRepository";
@@ -100,15 +106,23 @@ public class AppContextListener implements ServletContextListener {
         TicketServiceImpl ticketService = new TicketServiceImpl(
                 ticketRepository, categoriaRepository, usuarioRepository, comentarioRepository,
                 historialRepository, prioridadService, estrategiaSla, estrategiaAsignacion, publicadorNotificaciones);
+        // ReporteService usa el repositorio directamente (no ConsultaTicketService):
+        // necesita agregar sobre TODOS los tickets sin importar el rol de quien
+        // pregunta (siempre es el admin), y tambien necesita listar agentes.
+        ReporteService reporteService = new ReporteServiceImpl(ticketRepository, usuarioRepository);
+        NotificacionService notificacionService = new NotificacionServiceImpl(notificacionRepository);
 
         // 5. Publicar en el contexto para que los servlets los usen. La MISMA
-        // instancia se publica 4 veces, cada vez "disfrazada" del tipo de
-        // interfaz correspondiente (ISP en accion en el punto de inyeccion).
+        // instancia de TicketServiceImpl se publica 4 veces, cada vez
+        // "disfrazada" del tipo de interfaz correspondiente (ISP en accion
+        // en el punto de inyeccion).
         contexto.setAttribute(CONSULTA_TICKET_SERVICE, (ConsultaTicketService) ticketService);
         contexto.setAttribute(OPERACIONES_SOLICITANTE, (OperacionesSolicitante) ticketService);
         contexto.setAttribute(OPERACIONES_AGENTE, (OperacionesAgente) ticketService);
         contexto.setAttribute(OPERACIONES_ADMINISTRADOR, (OperacionesAdministrador) ticketService);
         contexto.setAttribute(COMENTARIO_SERVICE, comentarioService);
+        contexto.setAttribute(REPORTE_SERVICE, reporteService);
+        contexto.setAttribute(NOTIFICACION_SERVICE, notificacionService);
         contexto.setAttribute(AUTENTICACION_SERVICE, autenticacionService);
         contexto.setAttribute(CATEGORIA_REPOSITORY, categoriaRepository);
         contexto.setAttribute(USUARIO_REPOSITORY, usuarioRepository);

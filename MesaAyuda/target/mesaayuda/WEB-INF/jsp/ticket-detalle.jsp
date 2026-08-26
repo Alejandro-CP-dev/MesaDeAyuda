@@ -56,6 +56,28 @@
 
                     </a>
 
+                    <a href="${pageContext.request.contextPath}/app/notificaciones"
+                       class="nav-item">
+
+                        <span class="nav-icon">🔔</span>
+
+                        <span>Notificaciones</span>
+
+                    </a>
+
+                    <c:if test="${sessionScope.usuarioAutenticado.rol == 'ADMINISTRADOR'}">
+
+                        <a href="${pageContext.request.contextPath}/app/reportes"
+                           class="nav-item">
+
+                            <span class="nav-icon">📊</span>
+
+                            <span>Reportes</span>
+
+                        </a>
+
+                    </c:if>
+
                 </nav>
 
 
@@ -604,6 +626,30 @@
                                                    name="accion"
                                                    value="cerrar">
 
+                                            <div class="campo">
+
+                                                <label for="codigoCierre">
+                                                    Código de confirmación
+                                                </label>
+
+                                                <input type="text"
+                                                       id="codigoCierre"
+                                                       name="codigoCierre"
+                                                       maxlength="6"
+                                                       inputmode="numeric"
+                                                       pattern="[0-9]{6}"
+                                                       placeholder="000000"
+                                                       required>
+
+                                                <span style="font-size:0.68rem;color:var(--text-muted);display:block;margin-top:-0.6rem;margin-bottom:1rem;">
+                                                    Revisa tus
+                                                    <a href="${pageContext.request.contextPath}/app/notificaciones"
+                                                       style="color:var(--primary);font-weight:700;">notificaciones</a>
+                                                    para ver el código que te enviamos.
+                                                </span>
+
+                                            </div>
+
                                             <button type="submit"
                                                     class="btn btn-primario btn-block">
 
@@ -614,6 +660,10 @@
 
                                         </form>
 
+                                    </c:if>
+
+
+                                    <c:if test="${sessionScope.usuarioAutenticado.rol == 'SOLICITANTE' && (ticket.estado == 'RESUELTO' || ticket.estado == 'CERRADO')}">
 
                                         <form method="post"
                                               action="${pageContext.request.contextPath}/app/ticket">

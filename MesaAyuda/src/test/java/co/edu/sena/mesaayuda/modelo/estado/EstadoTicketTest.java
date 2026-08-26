@@ -53,13 +53,18 @@ class EstadoTicketTest {
     }
 
     @Test
-    void cerradoNoAdmiteNingunaTransicion() {
+    void cerradoSoloPuedeReabrirse() {
         EstadoTicket cerrado = Cerrado.getInstancia();
+
+        // Extension deliberada sobre la tabla del enunciado (seccion 7):
+        // un ticket CERRADO tambien se puede reabrir, por si el problema
+        // reaparece despues de que el solicitante lo dio por resuelto.
+        assertEquals("EN_PROCESO", cerrado.reabrir().nombre());
 
         assertThrows(TransicionInvalidaException.class, cerrado::asignar);
         assertThrows(TransicionInvalidaException.class, cerrado::iniciar);
         assertThrows(TransicionInvalidaException.class, cerrado::resolver);
-        assertThrows(TransicionInvalidaException.class, cerrado::reabrir);
+        assertThrows(TransicionInvalidaException.class, cerrado::cerrar);
         assertThrows(TransicionInvalidaException.class, cerrado::cancelar);
     }
 

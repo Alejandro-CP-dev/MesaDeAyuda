@@ -50,6 +50,28 @@
 
                     </a>
 
+                    <a href="${pageContext.request.contextPath}/app/notificaciones"
+                       class="nav-item">
+
+                        <span class="nav-icon">🔔</span>
+
+                        <span>Notificaciones</span>
+
+                    </a>
+
+                    <c:if test="${sessionScope.usuarioAutenticado.rol == 'ADMINISTRADOR'}">
+
+                        <a href="${pageContext.request.contextPath}/app/reportes"
+                           class="nav-item">
+
+                            <span class="nav-icon">📊</span>
+
+                            <span>Reportes</span>
+
+                        </a>
+
+                    </c:if>
+
                 </nav>
 
 
